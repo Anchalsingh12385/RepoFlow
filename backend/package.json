@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "Anchal Singh",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "yargs": "^18.0.0"
+  }
 }
