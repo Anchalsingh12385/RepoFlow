@@ -11,11 +11,14 @@ const { revertRepo } = require('./controllers/revert');
 
 yargs(hideBin(process.argv))
   .command( "init", "Initialize the repository",{},initRepo)
-   .command( "add <file>", "Add a file to the repository",(yargs)=>
-    {yargs.positional('file', {
+   .command( "add <filePath>", "Add a file to the repository",(yargs)=>
+    {yargs.positional('filePath', {
       describe: 'The file to add',
       type: 'string'
-    })},add)
+    })},
+    (argv) => {
+      add(argv.filePath);
+    })
     .command(
     "commit <message>",
     "Commit the staged files",
