@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
-const mainRouter = require("./routes/main.router");
+//const mainRouter = require("./routes/main.router");
 
 const yargs = require('yargs');
 const { hideBin } = require('yargs/helpers');
@@ -68,15 +68,25 @@ function startServer() {
   app.use(bodyParser.json());
   app.use(express.json());
 
-  const mongoURI = process.env.MONGODB_URI;
+  const mongoURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/repoflow";
 
   mongoose
-    .connect(mongoURI)
+    .connect(mongoURI, {
+      serverSelectionTimeoutMS: 5000,
+      family: 4,
+    })
     .then(() => console.log("MongoDB connected!"))
-    .catch((err) => console.error("Unable to connect : ", err));
+    .catch((err) => {
+      console.error("Unable to connect :", err.message);
+      if (process.env.MONGODB_URI) {
+        console.error("Check your Atlas network access, IP whitelist, and DNS resolution.");
+      } else {
+        console.error("No MONGODB_URI was found. Set it in the .env file or start a local MongoDB instance.");
+      }
+    });
 
   app.use(cors({ origin: "*" }));
-  app.use("/", mainRouter);
+  //app.use("/", mainRouter);
 
     let user = "test";
   const httpServer = http.createServer(app);
