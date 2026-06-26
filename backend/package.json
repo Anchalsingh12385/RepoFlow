@@ -11,6 +11,12 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "http": "^0.0.1-security",
+    "mongoose": "^9.7.2",
     "uuid": "^14.0.1",
     "yargs": "^18.0.0"
   }
